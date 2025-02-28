@@ -1,0 +1,29 @@
+.auth-form {
+    & .form {
+        &__inner {
+            width: 20%;
+        }
+    }
+}
+
+.cinema {
+    & .cinema {
+        &__content {
+            display: grid;
+            grid-template-columns: 16% 16% 16% 16% 16% 16%;
+            grid-template-rows: 16% 16% 16% 16% 16% 16%;
+            height: 500px;
+            gap: 1px;
+        }
+        &__content .cell {
+            background: #a3a3a3;
+            align-content: center;
+            text-align: center;
+            font-size: 26px;
+            cursor: pointer;
+        }
+        &__content .cell:hover {
+            background: #8b8b8b;
+        }
+    }
+}

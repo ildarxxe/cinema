@@ -1,0 +1,21 @@
+.auth-form .form__inner {
+  width: 20%;
+}
+
+.cinema .cinema__content {
+  display: grid;
+  grid-template-columns: 16% 16% 16% 16% 16% 16%;
+  grid-template-rows: 16% 16% 16% 16% 16% 16%;
+  height: 500px;
+  gap: 1px;
+}
+.cinema .cinema__content .cell {
+  background: #a3a3a3;
+  align-content: center;
+  text-align: center;
+  font-size: 26px;
+  cursor: pointer;
+}
+.cinema .cinema__content .cell:hover {
+  background: #8b8b8b;
+}/*# sourceMappingURL=style.css.map */
