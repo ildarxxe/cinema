@@ -3,15 +3,15 @@
         <h1 class="form__title text-center">Registration</h1>
         <label class="mb-3">
             Name:
-            <input type="text" id="name" required name="name" class="form-control">
+            <input type="text" id="reg_name" required name="name" class="form-control">
         </label>
         <label class="mb-3">
             Email:
-            <input type="email" id="email" required name="email" class="form-control">
+            <input type="email" id="reg_email" required name="email" class="form-control">
         </label>
         <label class="mb-3">
             Password:
-            <input type="password" id="password" required name="password" class="form-control">
+            <input type="password" id="reg_password" required name="password" class="form-control">
         </label>
         <label class="mb-3">
             Confirm password:

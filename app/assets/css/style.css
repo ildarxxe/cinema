@@ -18,4 +18,16 @@
 }
 .cinema .cinema__content .cell:hover {
   background: #8b8b8b;
-}/*# sourceMappingURL=style.css.map */
+}
+
+.header__other {
+  align-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+#header__error {
+  color: red !important;
+}
+
+/*# sourceMappingURL=style.css.map */

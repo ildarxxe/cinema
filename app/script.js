@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then((response) => response.text())
                 .then((html) => {
                     root.innerHTML = html;
+                    authInit();
                 })
                 .catch((error) => console.log(error));
         }
@@ -39,6 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch((error) => console.log(error));
         }
+        if (hash === "#logout") {
+            fetch('/app/templates/logout.php')
+                .then((response) => response.text())
+                .then((html) => {
+                    root.innerHTML = html;
+                })
+                .catch((error) => console.log(error));
+        }
     }
 
     function regInit() {
@@ -47,6 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', createUser)
         } else {
             console.log('btn reg_submit not found');
+        }
+    }
+
+    function authInit() {
+        const btn = document.getElementById('auth_submit');
+        if (btn) {
+            btn.addEventListener('click', readUser);
+        } else {
+            console.log('btn auth_submit not found');
         }
     }
 
@@ -72,9 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const formHandler = '/app/formHandler.php';
 
     function createUser() {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const name = document.getElementById('reg_name').value;
+        const email = document.getElementById('reg_email').value;
+        const password = document.getElementById('reg_password').value;
 
         fetch(formHandler, {
             method: "POST",
@@ -89,7 +107,40 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => data)
+            .catch((error) => console.log(error))
+    }
+
+    function readUser() {
+        const email = document.getElementById('auth_email').value;
+        const password = document.getElementById('auth_password').value;
+        const header_error = document.getElementById('header__error');
+        fetch(formHandler, {
+            method: "POST",
+            header: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "read",
+                email,
+                password
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+                if (data.error) {
+                    if (header_error) {
+                        header_error.textContent = data.error;
+                    } else {
+                        console.log('non error');
+                    }
+                } else {
+                    console.log('non data.error')
+                }
+            })
             .catch((error) => console.log(error))
     }
 

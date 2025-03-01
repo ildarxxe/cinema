@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,33 @@
 <body>
     <header class="header">
         <nav class="nav nav-tabs">
-            <li class="nav-item"><a href="#auth" class="nav-link">Auth</a></li>
-            <li class="nav-item"><a href="#reg" class="nav-link">Register</a></li>
-            <li class="nav-item"><a href="#cinema" class="nav-link">Cinema</a></li>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<li class="nav-item"><a href="./app/templates/logout.php" class="nav-link">Logout</a></li><li class="nav-item"><a href="#cinema" class="nav-link">Cinema</a></li>';
+            } else {
+                echo '<li class="nav-item"><a href="#auth" class="nav-link">Auth</a></li>
+            <li class="nav-item"><a href="#reg" class="nav-link">Register</a></li>';
+            }
+            ?>
+            <?php
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                    try {
+                        $pdo = new PDO('mysql:host=localhost;dbname=grand_cinema', 'root', 'admin');
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    } catch (PDOException $e) {
+                        echo $e->getMessage();
+                    }
+                    $sql = "SELECT name FROM users WHERE id = :user_id";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['user_id' => $user_id]);
+                    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $username = $user[0]['name'];
+
+                    echo '<p class="profile header__other">Профиль: ' . $username . '</p>';
+                }
+                ?>
+                <p id="header__error" class="header__other"></p>
         </nav>
     </header>
     <div id="root"></div>
