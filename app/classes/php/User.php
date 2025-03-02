@@ -1,10 +1,15 @@
-<?php 
-namespace App\classes;
+<?php
+
+namespace App\classes\php;
+
 session_start();
-class User implements Model {
+
+class User implements Model
+{
     private object $pdo;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->pdo = $pdo;
     }
 
@@ -12,11 +17,15 @@ class User implements Model {
     {
         $keys = array_keys($data);
         $values = array_values($data);
+        $email_value = null;
         foreach ($data as $key => $value) {
             if ($key === 'password') {
                 $index = array_search($key, $keys);
                 $values[$index] = password_hash($value, PASSWORD_DEFAULT);
                 break;
+            }
+            if ($key === 'email') {
+                $email_value = $value;
             }
         }
 
@@ -24,19 +33,34 @@ class User implements Model {
         $placeholders = array_fill(0, count($values), "?");
         $values_string = implode(", ", $placeholders);
 
-        $sql = "INSERT INTO $table_name ($keys_string) VALUES ($values_string)";
-
+        $sqlSelect = "SELECT COUNT(*) FROM $table_name WHERE email = :email";
         try {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($values);
-            return true;
+            $stmt = $this->pdo->prepare($sqlSelect);
+            $stmt->bindParam(":email", $email_value);
+            $stmt->execute();
+            $count_email = $stmt->fetchColumn();
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }
-        return false;
+        if ($count_email > 0) {
+            return "The email is already exist";
+        } else {
+            $sql = "INSERT INTO $table_name ($keys_string) VALUES ($values_string)";
+
+            try {
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute($values);
+                return true;
+            } catch (\PDOException $e) {
+                echo $e->getMessage();
+            }
+            return "User is registered";
+        }
     }
 
-    public function read($table_name, $data): bool|string {
+    public
+    function read($table_name, $data): bool|string
+    {
         $email_value = null;
         $password_value = null;
         foreach ($data as $key => $value) {
@@ -76,10 +100,15 @@ class User implements Model {
         }
     }
 
-    public function update() {
+    public
+    function update()
+    {
 
     }
-    public function delete() {
+
+    public
+    function delete()
+    {
 
     }
 }

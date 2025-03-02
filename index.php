@@ -20,6 +20,8 @@
             }
             ?>
             <?php
+                $session_data = $_SESSION;
+                echo '<script>let session_data = ' . json_encode($session_data) . '</script>';
                 if (isset($_SESSION['user_id'])) {
                     $user_id = $_SESSION['user_id'];
                     try {
@@ -37,10 +39,9 @@
                     echo '<p class="profile header__other">Профиль: ' . $username . '</p>';
                 }
                 ?>
-                <p id="header__error" class="header__other"></p>
         </nav>
     </header>
     <div id="root"></div>
 </body>
-<script src="../app/script.js"></script>
+<script src="./app/script.js" type="module"></script>
 </html>

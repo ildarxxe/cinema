@@ -1,7 +1,7 @@
 <?php
 
-use App\classes\Database;
-use App\classes\User;
+use App\classes\php\Database;
+use App\classes\php\User;
 
 require_once('../vendor/autoload.php');
 
@@ -29,7 +29,7 @@ switch ($action) {
         if (!empty($name) || !empty($email) || !empty($password)) {
             $result = $user->create($user_table_name, ['name' => $name, 'email' => $email, 'password' => $password]);
             if ($result === true) {
-                echo json_encode(['message' => 'Пользователь создан']);
+                echo json_encode(['message' => 'Пользователь создан!', 'redirect' => '../index.php#auth']);
             } else {
                 echo json_encode(['error' => $result]);
             }
@@ -42,7 +42,7 @@ switch ($action) {
         if (!empty($email) || !empty($password)) {
             $result = $user->read($user_table_name, ['email' => $email, 'password' => $password]);
             if ($result === true) {
-                echo json_encode(['message' => 'Пользователь найден!', 'redirect' => '../index.php']);
+                echo json_encode(['message' => 'Пользователь найден!', 'redirect' => '../index.php#cinema']);
             } else {
                 echo json_encode(['error' => $result]);
             }

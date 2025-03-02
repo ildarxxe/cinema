@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\classes;
+namespace App\classes\php;
 
 interface Model {
     public function create($table_name, $data): bool|string;
