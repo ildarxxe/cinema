@@ -10,7 +10,7 @@ export default class RegValid {
                 name: document.getElementById('reg_name'),
                 validate: function () {
                     if (!this.name.value.length && this.name.blur) {
-                        return "The field cannot be empty!";
+                        return "Поле не должно быть пустым!";
                     } else {
                         return "";
                     }
@@ -21,9 +21,9 @@ export default class RegValid {
                 regex: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
                 validate: function () {
                     if (!this.email.value.length && this.email.blur) {
-                        return "The field cannot be empty!";
+                        return "Поле не должно быть пустым!";
                     } else if(!this.regex.test(this.email.value)) {
-                        return "Incorrect email";
+                        return "Некорректный email";
                     } else {
                         return "";
                     }
@@ -34,10 +34,10 @@ export default class RegValid {
                 validate: function () {
                     if (!this.password.value.length && this.password.blur) {
                         password_value = this.password.value;
-                        return 'The field cannot be empty!';
+                        return 'Поле не должно быть пустым!';
                     } else if (this.password.value.length < 8 && this.password.blur) {
                         password_value = this.password.value;
-                        return "Password must be at least 8 characters long!";
+                        return "Пароль должен содержать не менее 8 символов";
                     } else {
                         password_value = this.password.value;
                         return "";
@@ -48,9 +48,9 @@ export default class RegValid {
                 password_confirm: document.getElementById('password_confirm'),
                 validate: function () {
                     if (!this.password_confirm.value.length && this.password_confirm.blur) {
-                        return "The field cannot be empty!";
+                        return "Поле не должно быть пустым!";
                     } else if (this.password_confirm.value !== password_value) {
-                        return "The passwords do not match!";
+                        return "Пароли не совпадают!";
                     } else {
                         return "";
                     }

@@ -10,9 +10,9 @@ export default class AuthValid {
                 regex: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
                 validate: function () {
                     if (!this.email.value.length && this.email.blur) {
-                        return "The field cannot be empty!";
+                        return "Поле не может быть пустым!";
                     } else if(!this.regex.test(this.email.value)) {
-                        return "Incorrect email";
+                        return "Некорректный email!";
                     } else {
                         return "";
                     }
@@ -22,7 +22,7 @@ export default class AuthValid {
                 password: document.getElementById('auth_password'),
                 validate: function () {
                     if (!this.password.value.length && this.password.blur) {
-                        return 'The field cannot be empty!';
+                        return 'Поле не должно быть пустым!';
                     } else {
                         return "";
                     }

@@ -5,7 +5,7 @@ export default class Init {
     countSeats;
     constructor(userHandler) {
         this.userHandler = userHandler;
-        this.countSeats = 36;
+        this.countSeats = 200;
     }
 
     cinemaInit() {

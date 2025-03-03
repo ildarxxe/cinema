@@ -43,7 +43,7 @@ class User implements Model
             echo $e->getMessage();
         }
         if ($count_email > 0) {
-            return "The email is already exist";
+            return "Email уже существует";
         } else {
             $sql = "INSERT INTO $table_name ($keys_string) VALUES ($values_string)";
 
@@ -54,7 +54,7 @@ class User implements Model
             } catch (\PDOException $e) {
                 echo $e->getMessage();
             }
-            return "User is registered";
+            return "Пользователь зарегистрирован";
         }
     }
 
@@ -86,17 +86,17 @@ class User implements Model
                         $_SESSION["user_id"] = $user["id"];
                         return true;
                     } else {
-                        return "Wrong password";
+                        return "Неправильный пароль";
                     }
                 } else {
-                    return "User not found";
+                    return "Пользователь не найден";
                 }
             } catch (\PDOException $e) {
                 echo $e->getMessage();
                 return false;
             }
         } else {
-            return 'email or password missing';
+            return 'Email или пароль неправильные';
         }
     }
 
