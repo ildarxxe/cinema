@@ -65,26 +65,21 @@ body {
   margin-bottom: 30px;
 }
 .cinema .cinema__content {
-  display: grid;
-  grid-template-columns: repeat(10, 8%);
-  grid-auto-rows: auto;
   height: max-content;
-  justify-content: center;
+  display: flex;
+  gap: 3%;
+  padding: 0 60px;
 }
-.cinema .cinema__content .cell {
-  background: #c46d6d;
-  align-content: center;
+.cinema .cinema__title {
   text-align: center;
-  font-size: 26px;
-  cursor: pointer;
-  border: 1px solid black;
-  aspect-ratio: 1/0.5;
 }
-.cinema .cinema__content .cell:hover {
-  background: #d55353;
+.cinema .cinema__card {
+  background: rgba(117, 117, 117, 0.3019607843);
+  border-radius: 5px;
+  padding: 0 20px;
 }
-.cinema .cinema__name {
-  text-align: center;
+.cinema .cinema__link {
+  color: white;
 }
 
 .header__other {
@@ -141,6 +136,115 @@ li::marker {
 
 .mb-3 {
   margin-bottom: 5px;
+}
+
+.cinema__name {
+  text-align: center;
+}
+
+.movies .movies__cards {
+  display: flex;
+  gap: 3%;
+}
+.movies .movies__inner {
+  padding: 0 40px;
+}
+.movies .movies__card {
+  background: rgba(117, 117, 117, 0.3019607843);
+  padding: 0 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.movies .movies__card:hover {
+  transform: scale(1.01);
+}
+
+.tac {
+  text-align: center !important;
+}
+
+.screenings .screenings__cards {
+  display: flex;
+  gap: 3%;
+}
+.screenings .screenings__inner {
+  padding: 0 40px;
+}
+.screenings .screenings__card {
+  background: rgba(117, 117, 117, 0.3019607843);
+  padding: 0 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.screenings .screenings__card:hover {
+  transform: scale(1.01);
+}
+
+.screen {
+  background: rgba(0, 0, 0, 0.5803921569);
+  width: 40%;
+  margin: 0 auto;
+  height: 30px;
+  align-content: center;
+  border-radius: 5px;
+}
+
+.hall .hall__capacity {
+  display: grid;
+  grid-template-columns: repeat(14, 7.15%);
+  padding: 0 100px;
+  grid-template-rows: auto;
+  margin: 30px 0;
+}
+
+.cell {
+  aspect-ratio: 1/0.5;
+  background: rgba(0, 0, 0, 0.4705882353);
+  align-content: center;
+  text-align: center;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background: rgba(0, 0, 0, 0.89);
+}
+
+.price {
+  font-size: 18px;
+}
+
+.active {
+  background: rgba(27, 110, 27, 0.91) !important;
+}
+
+.buy {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 100px;
+}
+
+.buy_tickets {
+  height: 40px;
+  border: none;
+  background: #a41b15;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  padding: 10px 10px;
+  line-height: 50%;
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: default;
+}
+
+.profile {
+  line-height: 30%;
+  font-size: 18px;
 }
 
 /*# sourceMappingURL=style.css.map */

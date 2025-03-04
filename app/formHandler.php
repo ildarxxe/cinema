@@ -42,7 +42,7 @@ switch ($action) {
         if (!empty($email) || !empty($password)) {
             $result = $user->read($user_table_name, ['email' => $email, 'password' => $password]);
             if ($result === true) {
-                echo json_encode(['message' => 'Пользователь найден!', 'redirect' => '../index.php#cinema']);
+                echo json_encode(['message' => 'Пользователь найден!', 'redirect' => '../index.php#cinemas']);
             } else {
                 echo json_encode(['error' => $result]);
             }

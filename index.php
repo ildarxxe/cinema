@@ -13,10 +13,10 @@
         <nav class="nav nav-tabs">
             <?php
             if (isset($_SESSION['user_id'])) {
-                echo '<a href="./app/templates/logout.php" class="nav-link">Logout</a><a href="#cinema" class="nav-link">Cinema</a>';
+                echo '<a href="./app/templates/logout.php" class="nav-link">Выйти</a><a href="#cinemas" class="nav-link">Кинотеатры</a>';
             } else {
-                echo '<a href="#auth" class="nav-link">Auth</a>
-            <a href="#reg" class="nav-link">Register</a>';
+                echo '<a href="#auth" class="nav-link">Авторизация</a>
+            <a href="#reg" class="nav-link">Регистрация</a>';
             }
             ?>
             <?php
@@ -36,7 +36,7 @@
                     $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $username = $user[0]['name'];
 
-                    echo '<p class="profile header__other">Профиль: ' . $username . '</p>';
+                    echo '<p class="profile">Профиль: ' . $username . '</p>';
                 }
                 ?>
         </nav>
