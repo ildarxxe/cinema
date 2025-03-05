@@ -10,7 +10,7 @@
 <body>
 <header class="header">
     <nav class="nav nav-tabs">
-        <a class="nav-link home">Главная</a>
+        <a class="nav-link home" href="#">Главная</a>
         <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="./app/templates/logout.php" class="nav-link">Выйти</a><a href="#cinemas" class="nav-link">Кинотеатры</a>';
