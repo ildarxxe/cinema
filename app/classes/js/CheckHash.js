@@ -7,6 +7,15 @@ export default class CheckHash {
     }
 
     checker(hash) {
+        if (hash === '') {
+            fetch('/app/templates/home.php')
+                .then(response => response.text())
+                .then(html => {
+                    this.root.innerHTML = html;
+                    this.init.homeInit();
+                })
+                .catch(error => console.log(error))
+        }
         if (session_data.user_id) {
             if (hash === "#cinemas") {
                 fetch('/app/templates/cinemas.php')
@@ -53,6 +62,15 @@ export default class CheckHash {
                         this.init.hallInit(price, session_data, screening);
                     })
                     .catch((error) => console.log(error));
+            }
+            if (hash === "#profile") {
+                fetch('/app/templates/profile.php')
+                    .then(response => response.text())
+                    .then(html => {
+                        this.root.innerHTML = html;
+                        this.init.profileInit();
+                    })
+                    .catch(error => console.log(error));
             }
         } else {
             if (hash === "#auth") {

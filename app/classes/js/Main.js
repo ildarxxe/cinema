@@ -17,6 +17,12 @@ export default class Main {
     initApp(init, checkHash, router) {
         checkHash.checker(window.location.hash);
 
+        const home = document.querySelector('.home');
+        home.addEventListener('click', () => {
+            window.location.hash = '';
+            checkHash.checker(window.location.hash);
+        })
+
         window.addEventListener('hashchange', () => {
             router.getHash();
         });

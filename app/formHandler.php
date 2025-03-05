@@ -48,6 +48,41 @@ switch ($action) {
             }
         }
         break;
+    case 'put_profile':
+        $name = $data['change_name'] ?? null;
+        $email = $data['change_email'] ?? null;
+
+        $result = $user->update($user_table_name, ['name' => $name, 'email' => $email]);
+        if ($result === true) {
+            echo json_encode(['message' => 'Изменения успешно сохранены!', 'redirect' => '../index.php#profile']);
+        } else {
+            echo json_encode(['error' => $result]);
+        }
+        break;
+
+    case 'put_password':
+        $current_password = $data["current_password"] ?? null;
+        $change_password = $data['change_password'] ?? null;
+
+        $result = $user->update($user_table_name, ['current_password' => $current_password, 'change_password' => $change_password, 'action' => 'put_password']);
+        if ($result === true) {
+            echo json_encode(['message' => 'Ваш пароль успешно обновлен!', 'redirect' => '../index.php#profile']);
+        } else {
+            echo json_encode(['error' => $result]);
+        }
+        break;
+    case 'delete':
+        $id = $_SESSION["user_id"] ?? null;
+        $delete_password = $data["delete_password"] ?? null;
+
+        $result = $user->delete($user_table_name, ['id' => $id, 'delete_password' => $delete_password]);
+
+        if ($result === true) {
+            echo json_encode(['message' => 'Аккаунт удален!', 'redirect' => '../index.php#auth']);
+        } else {
+            echo json_encode(['error' => $result]);
+        }
+        break;
     default:
         echo json_encode(['error' => 'Некорректное действие']);
 }

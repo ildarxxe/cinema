@@ -77,6 +77,7 @@ export default class Init {
                 console.log(error);
             }
         }
+
         getTickets().then(r => {
             if (r) {
                 const arr = r.split(', ');
@@ -151,5 +152,155 @@ export default class Init {
             console.log('btn auth_submit not found');
         }
         new AuthValid();
+    }
+
+    profileInit() {
+        const edit_profile = document.querySelector('.edit_profile');
+        const modal = document.querySelector('.form_edit_profile');
+        const close_btns = document.querySelectorAll('.form__close');
+        edit_profile.addEventListener('click', () => {
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        });
+        const change_password = document.querySelector('.change_password');
+        const change_password_modal = document.querySelector('.form_change_password');
+        change_password.addEventListener('click', () => {
+            if (change_password_modal.classList.contains('hidden')) {
+                change_password_modal.classList.remove('hidden');
+            } else {
+                change_password_modal.classList.add('hidden');
+            }
+        })
+        close_btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent_elem = btn.closest('.form');
+                parent_elem.classList.add('hidden');
+            })
+        })
+
+        const edit_btn = document.querySelector('.edit_profile_submit');
+        edit_btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const change_name = document.getElementById('change_name').value;
+            const change_email = document.getElementById('change_email').value;
+
+            fetch('./app/formHandler.php', {
+                method: "PUT",
+                header: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    action: "put_profile",
+                    change_name,
+                    change_email
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect) {
+                        alert(data.message);
+                        window.location.href = data.redirect;
+                        location.reload();
+                    }
+                })
+                .catch(error => console.log(error))
+        })
+
+        const change_password_btn = document.querySelector('.change_password_submit');
+        change_password_btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const current_password = document.getElementById('current_password').value;
+            const change_password = document.getElementById('change_password').value;
+
+            fetch('./app/formHandler.php', {
+                method: "PUT",
+                header: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    action: "put_password",
+                    current_password,
+                    change_password
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    }
+                    if (data.redirect) {
+                        alert(data.message);
+                        window.location.href = data.redirect;
+                        location.reload();
+                    }
+                })
+                .catch(error => console.log(error))
+        });
+
+        const delete_profile = document.querySelector('.delete_profile');
+        const delete_profile_submit = document.querySelector('.delete_profile_submit');
+        delete_profile.addEventListener('click', () => {
+            if (confirm('Вы точно хотите удалить аккаунт?')) {
+                const form_delete_profile = document.querySelector('.form_delete_profile');
+                if (form_delete_profile.classList.contains('hidden')) {
+                    form_delete_profile.classList.remove('hidden');
+                } else {
+                    form_delete_profile.classList.add('hidden');
+                }
+                deleteProfile();
+            }
+        })
+
+        function deleteProfile() {
+            delete_profile_submit.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const delete_password = document.getElementById('delete_password').value;
+                fetch('./app/formHandler.php', {
+                    method: "DELETE",
+                    header: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        action: "delete",
+                        delete_password
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        }
+                        if (data.redirect) {
+                            alert(data.message);
+                            window.location.href = data.redirect;
+                            location.reload();
+                        }
+                    })
+                    .catch(error => console.log(error))
+            })
+        }
+    }
+
+    homeInit() {
+        const title = document.querySelector('.home__title');
+        const contentHeight = title.scrollHeight;
+
+        title.style.height = contentHeight + 'px';
+
+        const line_h = document.querySelector('.home__line--h');
+        const line_v = document.querySelector('.home__line--v');
+
+        line_h.style.height = '300px';
+        line_v.style.height = '153px';
+
+        const info = document.querySelector('.home__info');
+        const infoHeight = info.scrollHeight;
+
+        info.style.height = infoHeight + 'px';
+
     }
 }
