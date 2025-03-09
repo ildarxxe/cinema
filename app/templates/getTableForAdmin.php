@@ -27,6 +27,7 @@ if ($role[0] === 'admin') {
         $html .= "<h2>Данные таблицы: " . $table_name . "</h2>";
         $html .= "<table class='admin__table'>";
         $html .= "<thead><tr>";
+
         if (!empty($result)) {
             foreach (array_keys($result[0]) as $column) {
                 $html .= "<th>" . $column . "</th>";
@@ -34,11 +35,13 @@ if ($role[0] === 'admin') {
 
             $html .= "</tr></thead><tbody>";
             foreach ($result as $row) {
+                $first_column = array_key_first($row);
+                $id = $row[$first_column];
                 $html .= "<tr>";
                 foreach ($row as $value) {
                     $html .= "<td>" . $value . "</td>";
                 }
-                $html .= "</tr>";
+                $html .= "<td class='delete__row' data-id='$id' data-value='$first_column' data-table=$table_name>Удалить</td></tr>";
             }
             $html .= "</tbody></table></div>";
             $html .= "<form class='admin__form'>";

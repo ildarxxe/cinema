@@ -1,5 +1,6 @@
 import AuthValid from "./AuthValid.js";
 import RegValid from "./RegValid.js";
+import PhoneValid from "./PhoneValid.js";
 
 export default class Init {
     countSeats;
@@ -190,6 +191,23 @@ export default class Init {
         }
 
         new RegValid();
+        new PhoneValid();
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes) {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('form__label--add')) {
+                            new PhoneValid();
+                        }
+                    })
+                }
+            })
+        });
+
+        observer.observe(document.querySelector('.phones'), {
+            childList: true,
+            subtree: true
+        })
     }
 
     authInit() {
@@ -251,16 +269,12 @@ export default class Init {
                 } else {
                     form_delete_profile.classList.add('hidden');
                 }
-                deleteProfile();
+                delete_profile_submit.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.userHandler.deleteUser();
+                });
             }
         })
-
-        function deleteProfile() {
-            delete_profile_submit.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.userHandler.deleteUser();
-            });
-        }
 
         const fields = [
             {
@@ -375,6 +389,7 @@ export default class Init {
                 }
             })
         }
+        new PhoneValid();
     }
 
     adminInit() {
@@ -392,6 +407,33 @@ export default class Init {
                         .catch(error => console.log(error));
                 })
             })
+
+            function deleteRow() {
+                const delete_btn = document.querySelectorAll('.delete__row');
+                delete_btn.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const id = btn.dataset.id;
+                        const column = btn.dataset.value;
+                        const table_name = btn.dataset.table;
+                        fetch('/app/adminHandler.php', {
+                            method: 'DELETE',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                action: "delete",
+                                id,
+                                column,
+                                table_name
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => console.log(data))
+                            .catch(error => console.log(error));
+                    })
+                })
+            }
 
             function requestData(e) {
                 e.preventDefault();
@@ -416,7 +458,7 @@ export default class Init {
                     })
                 })
                     .then(response => response.json())
-                    .then(data => console.log(data))
+                    .then(data => data)
                     .catch(error => console.log(error))
             }
 
@@ -438,6 +480,7 @@ export default class Init {
                                 td.forEach(elem => {
                                     wordLimit(elem, 6)
                                 })
+                                deleteRow();
                             }
                             if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('admin__form')) {
                                 const submit_button = node.querySelector('.insert_into_table');

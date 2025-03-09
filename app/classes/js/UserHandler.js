@@ -93,6 +93,9 @@ export default class UserHandler {
         if (action === "put_profile") {
             const change_name = document.getElementById('change_name').value;
             const change_email = document.getElementById('change_email').value;
+            const change_phone1 = document.getElementById('change_phone1').value;
+            const change_phone2 = document.getElementById('change_phone2').value;
+            const change_phone3 = document.getElementById('change_phone3').value;
 
             fetch(this.formHandler, {
                 method: "PUT",
@@ -102,7 +105,10 @@ export default class UserHandler {
                 body: JSON.stringify({
                     action: "put_profile",
                     change_name,
-                    change_email
+                    change_email,
+                    change_phone1,
+                    change_phone2,
+                    change_phone3
                 })
             })
                 .then(response => response.json())

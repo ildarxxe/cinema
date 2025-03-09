@@ -127,20 +127,44 @@ class User implements Model
                 return 'Неверный пароль';
             }
         } else {
-            $name = $data['name'] ?? null;
-            $email = $data['email'] ?? null;
-            $id = $_SESSION['user_id'] ?? null;
+            $name = $data['name'];
+            $email = $data['email'];
+            $phone1 = $data['phone1'];
+            $phone2 = $data['phone2'] ?? '';
+            $phone3 = $data['phone3'] ?? '';
 
-            $sql = "UPDATE $table_name SET name = :name, email = :email WHERE id = :id";
+            foreach ($data as $key => $value) {
+                if ($key === 'phone2') {
+                    $phone2 = $value;
+                }
+                if ($key === 'phone3') {
+                    $phone3 = $value;
+                }
+            }
+
+            $id = $_SESSION["user_id"];
+
             try {
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->bindParam(":name", $name);
-                $stmt->bindParam(":email", $email);
-                $stmt->bindParam(":id", $id);
-                $stmt->execute();
+                $this->pdo->beginTransaction();
+                $sql_users = "UPDATE $table_name SET name = :name, email = :email WHERE id = :id";
+                $stmt_users = $this->pdo->prepare($sql_users);
+                $stmt_users->bindParam(':name', $name);
+                $stmt_users->bindParam(':email', $email);
+                $stmt_users->bindParam(':id', $id);
+                $stmt_users->execute();
+
+                $sql_phones = "UPDATE users_phone SET phone1 = :phone1, phone2 = :phone2, phone3 = :phone3 WHERE user_id = :id";
+                $stmt_phones = $this->pdo->prepare($sql_phones);
+                $stmt_phones->bindParam(':phone1', $phone1);
+                $stmt_phones->bindParam(':phone2', $phone2);
+                $stmt_phones->bindParam(':phone3', $phone3);
+                $stmt_phones->bindParam(':id', $id);
+                $stmt_phones->execute();
+                $this->pdo->commit();
                 return true;
             } catch (\PDOException $e) {
                 echo $e->getMessage();
+                $this->pdo->rollBack();
                 return false;
             }
         }
@@ -161,15 +185,20 @@ class User implements Model
             $password = $result["password"];
 
             if (password_verify($delete_password, $password)) {
-                $sql2 = "DELETE FROM tickets WHERE user_id = :id";
-                $stmt2 = $this->pdo->prepare($sql2);
-                $stmt2->bindParam(":id", $id);
-                $stmt2->execute();
+                $sql_tickets = "DELETE FROM tickets WHERE user_id = :id";
+                $stmt_tickets = $this->pdo->prepare($sql_tickets);
+                $stmt_tickets->bindParam(":id", $id);
+                $stmt_tickets->execute();
 
-                $sql3 = "DELETE FROM $table_name WHERE id = :id";
-                $stmt3 = $this->pdo->prepare($sql3);
-                $stmt3->bindParam(":id", $id);
-                $stmt3->execute();
+                $sql_phones = "DELETE FROM users_phone WHERE user_id = :id";
+                $stmt_phones = $this->pdo->prepare($sql_phones);
+                $stmt_phones->bindParam(":id", $id);
+                $stmt_phones->execute();
+
+                $sql_users = "DELETE FROM $table_name WHERE id = :id";
+                $stmt_users = $this->pdo->prepare($sql_users);
+                $stmt_users->bindParam(":id", $id);
+                $stmt_users->execute();
 
                 session_unset();
                 session_destroy();

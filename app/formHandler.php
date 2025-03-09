@@ -58,8 +58,11 @@ switch ($action) {
     case 'put_profile':
         $name = $data['change_name'] ?? null;
         $email = $data['change_email'] ?? null;
+        $phone1 = $data['change_phone1'] ?? null;
+        $phone2 = $data['change_phone2'] ?? null;
+        $phone3 = $data['change_phone3'] ?? null;
 
-        $result = $user->update($user_table_name, ['name' => $name, 'email' => $email, 'action' => 'put_profile']);
+        $result = $user->update($user_table_name, ['name' => $name, 'email' => $email, 'phone1' => $phone1, 'phone2' => $phone2, 'phone3' => $phone3, 'action' => 'put_profile']);
         if ($result === true) {
             echo json_encode(['message' => 'Изменения успешно сохранены!', 'redirect' => '../index.php#profile']);
         } else {

@@ -21,7 +21,7 @@ try {
     $stmt_phones = $pdo->prepare($sql_phones);
     $stmt_phones->bindParam(":id", $user_id);
     $stmt_phones->execute();
-    $phones = $stmt_phones->fetchAll(PDO::FETCH_ASSOC);
+    $result_phones = $stmt_phones->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
@@ -35,8 +35,25 @@ foreach ($result as $row) {
     $email = $row['email'];
     $role = $row['role'];
 }
+
+$phones = [];
+
+if (!empty($result_phones)) {
+    foreach ($result_phones[0] as $item => $value) {
+        if ($item === 'phone1') {
+            array_push($phones, $value);
+        }
+        if ($item === 'phone2') {
+            array_push($phones, $value);
+        }
+        if ($item === 'phone3') {
+            array_push($phones, $value);
+        }
+    }
+}
+
 ?>
-<?php if ($role === 'admin') { ?>
+
 <div class="profile">
     <div class="profile__inner">
         <h1 class="profile__title tac">Ваш профиль</h1>
@@ -47,10 +64,11 @@ foreach ($result as $row) {
                 <?php $count = 0;
                 foreach ($phones as $row) {
                     $count++;
-                    if ($count <= 3) {
+                    if (!empty($row)) {
                         ?>
-                        <h4 class="profile__phone">Номер телефона <?= $count ?>: <?= $row['phone' . $count] ?></h4>
-                    <?php } } ?>
+                        <h4 class="profile__phone">Номер телефона <?= $count ?>: <?= $row ?></h4>
+                    <?php }
+                } ?>
                 <a class="change_password action_profile">Изменить пароль</a>
                 <a class="edit_profile action_profile">Редактировать профиль</a>
                 <button type="button" class="delete_profile">Удалить профиль</button>
@@ -70,7 +88,18 @@ foreach ($result as $row) {
                            id="change_email">
                     <span class="form__error"></span>
                 </label>
-                <input type="button" disabled value="Изменить" class="form__submit edit_profile_submit profile__submit">
+                <?php $count = 0;
+                foreach ($phones as $row) {
+                    $count++;
+                    ?>
+                    <label class="form__label">
+                        Номер телефона <?= $count ?>:
+                        <input class="form-control input__phone" type="text" value="<?= $row ?>" name="change_phone<?= $count ?>"
+                               id="change_phone<?= $count ?>">
+                        <span class="form__error"></span>
+                    </label>
+                <?php } ?>
+                <input type="button" value="Изменить" class="form__submit edit_profile_submit profile__submit">
             </div>
         </div>
         <div class="hidden form form_change_password">
@@ -103,4 +132,3 @@ foreach ($result as $row) {
         </div>
     </div>
 </div>
-<?php } ?>
