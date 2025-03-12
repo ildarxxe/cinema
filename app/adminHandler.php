@@ -19,32 +19,22 @@ $role = $sql_role->fetch();
 if ($role[0] === 'admin') {
     if ($data['action'] === 'create') {
         $inputs = $data["inputs"] ?? null;
-
-        $phone1 = null;
-        $phone2 = null;
-        $phone3 = null;
         $user_id_phone = null;
 
         foreach ($inputs as $input => &$value) {
             if ($input == "password") {
                 $value = password_hash($value, PASSWORD_DEFAULT);
             }
-            if ($input == "phone1") {
-                $phone1 = $value;
-            }
-            if ($input == "phone2") {
-                $phone2 = $value;
-            }
-            if ($input == "phone3") {
-                $phone3 = $value;
-            }
             if ($input == "user_id") {
                 $user_id_phone = $value;
             }
         }
 
-        $phones = [$phone1, $phone2, $phone3];
-
+        $phones = [];
+        foreach ($inputs as $input) {
+            array_push($phones, $value);
+        }
+        $phones = array_shift($phones);
         $keys = array_keys($inputs);
         $values = array_values($inputs);
 
@@ -54,39 +44,11 @@ if ($role[0] === 'admin') {
         $table_name = $data["table_name"] ?? null;
         try {
             if ($table_name === "users_phone") {
-                $sql = "SELECT * FROM $table_name WHERE user_id = :user_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':user_id', $user_id_phone);
-                $stmt->execute();
-                if ($stmt->rowCount() > 0) {
-                    $count = 0;
-                    foreach ($phones as $phone) {
-                        $count++;
-                        if ($phone != '') {
-                            $sql = "UPDATE $table_name SET phone$count = :phone$count WHERE user_id = :user_id";
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->bindParam(":phone$count", $phone);
-                            $stmt->bindParam(":user_id", $user_id_phone);
-                            $stmt->execute();
-                        }
-                    }
-                } else {
-                    $sql = "INSERT INTO $table_name (user_id) VALUES (:user_id)";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':user_id', $user_id_phone);
-                    $stmt->execute();
-                    $count = 0;
-                    foreach ($phones as $phone) {
-                        $count++;
-                        if ($phone != '') {
-                            $sql = "UPDATE $table_name SET phone$count = :phone$count WHERE user_id = :user_id";
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->bindParam(":phone$count", $phone);
-                            $stmt->bindParam(":user_id", $user_id_phone);
-                            $stmt->execute();
-                        }
-                    }
-                }
+                $sql_phone = "INSERT INTO $table_name (user_id, phones) VALUES (:user_id, :phone)";
+                $stmt_phone = $pdo->prepare($sql_phone);
+                $stmt_phone->bindParam(':user_id', $user_id_phone);
+                $stmt_phone->bindParam(':phone', $phones);
+                $stmt_phone->execute();
             } else {
                 $sql = "INSERT INTO $table_name ($keys_str) VALUES ($values_str)";
                 $stmt = $pdo->prepare($sql);

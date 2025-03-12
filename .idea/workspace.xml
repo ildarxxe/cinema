@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ff1f18-c454-4d7a-960e-a23710da8fed" name="Список изменений" comment="">
-      <change afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/classes/js/PhoneValid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/adminHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/adminHandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/css/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/css/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/classes/js/Init.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/js/Init.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/classes/js/UserHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/js/UserHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/classes/php/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/php/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/formHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/formHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/getTableForAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/getTableForAdmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,12 +67,19 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/OSPanel/home/messenger",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -96,7 +100,10 @@
       <updated>1741336938342</updated>
       <workItem from="1741336939664" duration="11429000" />
       <workItem from="1741422379109" duration="13896000" />
-      <workItem from="1741503625318" duration="12385000" />
+      <workItem from="1741503625318" duration="14075000" />
+      <workItem from="1741526521799" duration="19000" />
+      <workItem from="1741593321901" duration="26000" />
+      <workItem from="1741780052087" duration="7762000" />
     </task>
     <servers />
   </component>

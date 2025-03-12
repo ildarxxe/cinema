@@ -25,14 +25,10 @@ switch ($action) {
         $name = $data["name"] ?? null;
         $email = $data["email"] ?? null;
         $password = $data["password"] ?? null;
-        $phones = $data["phones"] ?? [];
-
-        $phone1 = $phones[0] ?? null;
-        $phone2 = $phones[1] ?? null;
-        $phone3 = $phones[2] ?? null;
+        $phones = $data["phones_arr"] ?? [];
 
         if (!empty($name) || !empty($email) || !empty($password) || !empty($phone1)) {
-            $result = $user->create($user_table_name, ['name' => $name, 'email' => $email, 'password' => $password, 'phone1' => $phone1, 'phone2' => $phone2, 'phone3' => $phone3]);
+            $result = $user->create($user_table_name, ['name' => $name, 'email' => $email, 'password' => $password, 'phones' => $phones]);
             if ($result === true) {
                 echo json_encode(['message' => 'Пользователь создан!', 'redirect' => '../index.php#auth']);
             } else {
@@ -58,11 +54,9 @@ switch ($action) {
     case 'put_profile':
         $name = $data['change_name'] ?? null;
         $email = $data['change_email'] ?? null;
-        $phone1 = $data['change_phone1'] ?? null;
-        $phone2 = $data['change_phone2'] ?? null;
-        $phone3 = $data['change_phone3'] ?? null;
+        $phones = $data['phones'] ?? [];
 
-        $result = $user->update($user_table_name, ['name' => $name, 'email' => $email, 'phone1' => $phone1, 'phone2' => $phone2, 'phone3' => $phone3, 'action' => 'put_profile']);
+        $result = $user->update($user_table_name, ['name' => $name, 'email' => $email, 'phones' => $phones, 'action' => 'put_profile']);
         if ($result === true) {
             echo json_encode(['message' => 'Изменения успешно сохранены!', 'redirect' => '../index.php#profile']);
         } else {

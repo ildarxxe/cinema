@@ -9,16 +9,13 @@ export default class UserHandler {
         const name = document.getElementById('reg_name').value;
         const email = document.getElementById('reg_email').value;
         const password = document.getElementById('reg_password').value;
-        const phone1 = document.getElementById('phone1').value;
-        const phones = [phone1]
+        const phones = document.querySelectorAll('.input__phone');
         const header_error = document.getElementById('reg__error');
 
-        if (document.getElementById('phone2')) {
-            phones.push(document.getElementById('phone2').value);
-        }
-        if (document.getElementById('phone3')) {
-            phones.push(document.getElementById('phone3').value);
-        }
+        const phones_arr = [];
+        phones.forEach(phone => {
+            phones_arr.push(phone.value);
+        })
 
         fetch(this.formHandler, {
             method: "POST",
@@ -30,7 +27,7 @@ export default class UserHandler {
                 name,
                 email,
                 password,
-                phones
+                phones_arr
             })
         })
             .then(response => response.json())
@@ -93,9 +90,12 @@ export default class UserHandler {
         if (action === "put_profile") {
             const change_name = document.getElementById('change_name').value;
             const change_email = document.getElementById('change_email').value;
-            const change_phone1 = document.getElementById('change_phone1').value;
-            const change_phone2 = document.getElementById('change_phone2').value;
-            const change_phone3 = document.getElementById('change_phone3').value;
+            const phones_input = document.querySelectorAll('.input__phone');
+
+            const phones = [];
+            phones_input.forEach(phone => {
+                phones.push(phone.value);
+            })
 
             fetch(this.formHandler, {
                 method: "PUT",
@@ -106,9 +106,7 @@ export default class UserHandler {
                     action: "put_profile",
                     change_name,
                     change_email,
-                    change_phone1,
-                    change_phone2,
-                    change_phone3
+                    phones
                 })
             })
                 .then(response => response.json())

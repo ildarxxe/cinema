@@ -20,21 +20,14 @@ class User implements Model
         $name_value = $data['name'];
         $email_value = $data['email'];
         $password_value = null;
-        $phone1 = $data['phone1'];
-        $phone2 = $data['phone2'] ?? '';
-        $phone3 = $data['phone3'] ?? '';
+        $phones = $data['phones'];
 
         foreach ($data as $key => $value) {
             if ($key === 'password') {
                 $password_value = password_hash($value, PASSWORD_DEFAULT);
             }
-            if ($key === 'phone2') {
-                $phone2 = $value;
-            }
-            if ($key === 'phone3') {
-                $phone3 = $value;
-            }
         }
+
         try {
             $this->pdo->beginTransaction();
             $sql_users = "INSERT INTO $table_name (name, email, password) VALUES (:name, :email, :password)";
@@ -46,10 +39,14 @@ class User implements Model
 
             $user_id = $this->pdo->lastInsertId();
 
+            foreach ($phones as $item) {
+                $sql_phones = "INSERT INTO users_phone (user_id, phones) VALUES (:user_id, :phone)";
+                $stmt_phones = $this->pdo->prepare($sql_phones);
+                $stmt_phones->bindParam(':user_id', $user_id);
+                $stmt_phones->bindParam(':phone', $item);
+                $stmt_phones->execute();
+            }
 
-            $sql_phones = "INSERT INTO users_phone (user_id, phone1, phone2, phone3) VALUES (?, ?, ?, ?)";
-            $stmt_phones = $this->pdo->prepare($sql_phones);
-            $stmt_phones->execute([$user_id, $phone1, $phone2, $phone3]);
             $this->pdo->commit();
             return true;
         } catch (\PDOException $e) {
@@ -129,18 +126,7 @@ class User implements Model
         } else {
             $name = $data['name'];
             $email = $data['email'];
-            $phone1 = $data['phone1'];
-            $phone2 = $data['phone2'] ?? '';
-            $phone3 = $data['phone3'] ?? '';
-
-            foreach ($data as $key => $value) {
-                if ($key === 'phone2') {
-                    $phone2 = $value;
-                }
-                if ($key === 'phone3') {
-                    $phone3 = $value;
-                }
-            }
+            $phones = $data['phones'];
 
             $id = $_SESSION["user_id"];
 
@@ -153,13 +139,36 @@ class User implements Model
                 $stmt_users->bindParam(':id', $id);
                 $stmt_users->execute();
 
-                $sql_phones = "UPDATE users_phone SET phone1 = :phone1, phone2 = :phone2, phone3 = :phone3 WHERE user_id = :id";
-                $stmt_phones = $this->pdo->prepare($sql_phones);
-                $stmt_phones->bindParam(':phone1', $phone1);
-                $stmt_phones->bindParam(':phone2', $phone2);
-                $stmt_phones->bindParam(':phone3', $phone3);
-                $stmt_phones->bindParam(':id', $id);
-                $stmt_phones->execute();
+                $select = "SELECT * FROM users_phone WHERE user_id = :id";
+                $stmt = $this->pdo->prepare($select);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                $db_phones = [];
+                foreach ($result as $elem) {
+                    array_push($db_phones, $elem["phones"]);
+                }
+
+                $phones_to_delete = array_diff($db_phones, $phones);
+                foreach ($phones_to_delete as $phone) {
+                    $sql_delete = "DELETE FROM users_phone WHERE user_id = :id AND phones = :phone";
+                    $stmt_delete = $this->pdo->prepare($sql_delete);
+                    $stmt_delete->bindParam(":id", $id);
+                    $stmt_delete->bindParam(":phone", $phone);
+                    $stmt_delete->execute();
+                }
+
+                foreach ($phones as $phone) {
+                    if (!in_array($phone, $db_phones)) {
+                        $sql_insert = "INSERT INTO users_phone (user_id, phones) VALUES (:id, :phone)";
+                        $stmt_insert = $this->pdo->prepare($sql_insert);
+                        $stmt_insert->bindParam(":id", $id);
+                        $stmt_insert->bindParam(":phone", $phone);
+                        $stmt_insert->execute();
+                    }
+                }
+
                 $this->pdo->commit();
                 return true;
             } catch (\PDOException $e) {

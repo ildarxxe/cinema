@@ -221,6 +221,56 @@ export default class Init {
     }
 
     profileInit() {
+        const add_phone = document.querySelector('.add_phone');
+        const phone_box = document.querySelector('.phones');
+        const phone_inputs = document.querySelectorAll('.input__phone');
+
+        let count = phone_inputs.length;
+
+        if (add_phone) {
+            add_phone.addEventListener('click', () => {
+                const label = document.createElement('label');
+                label.classList.add('form__label');
+                label.classList.add('form__label--add');
+                label.innerHTML = `Номер телефона: <div class="additional__phone"><input type="text" class="form-control input__phone" name="change_phone${count + 1}"><button type="button" class="close_phone">-</button></div><span class="form__error"></span>`;
+
+                // const label_add = document.querySelectorAll('.form__label--add');
+
+                if (count !== 3) {
+                    count += 1;
+                    phone_box.appendChild(label);
+                } else {
+                    console.log('max')
+                }
+
+                closePhone();
+            });
+        }
+
+        function countPhones() {
+            const labels = document.querySelectorAll('.form__label--add');
+            // labels.forEach((label, index) => {
+            //     const newIndex = index + 2;
+            //     const input = label.querySelector('input');
+            //
+            //     input.id = `phone${newIndex}`;
+            //     input.name = `phone${newIndex}`;
+            // });
+            count = labels.length + 2;
+        }
+
+        function closePhone() {
+            const close_phone = document.querySelectorAll('.close_phone');
+            close_phone.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const label = btn.closest('.form__label--add');
+                    label.remove();
+                    countPhones();
+                });
+            });
+        }
+
+
         const edit_profile = document.querySelector('.edit_profile');
         const modal = document.querySelector('.form_edit_profile');
         const close_btns = document.querySelectorAll('.form__close');
