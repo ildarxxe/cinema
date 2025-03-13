@@ -73,18 +73,19 @@ foreach ($result as $row) {
                 <div class="phones">
                     <?php
                     foreach ($result_phones as $item => $value) { ?>
-                        <label class="form__label">
-                            Номер телефона <?= $item + 1 ?>:
-                            <input class="form-control input__phone" type="text" value="<?= $value['phones'] ?>" name="change_phone<?= $item + 1 ?>">
+                        <label class="form__label form__label--add">
+                            <div class="number_count">
+                                Номер телефона <span class="count"></span>:
+                            </div>
+                            <div class="additional__phone">
+                                <input class="form-control input__phone" type="text" value="<?= $value['phones'] ?>" name="change_phone<?= $item + 1 ?>">
+                                <button class="close_phone" type="button">-</button>
+                            </div>
                             <span class="form__error"></span>
                         </label>
                     <?php } ?>
-                    <?php
-                    if (count($result_phones) < 3) {
-                        echo '<button type="button" class="add_phone">+</button>';
-                    }
-                    ?>
                 </div>
+                <button type="button" class="add_phone">+</button>
                 <input type="button" value="Изменить" class="form__submit edit_profile_submit profile__submit">
             </div>
         </div>

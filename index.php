@@ -2,6 +2,13 @@
 
 session_start();
 
+use App\classes\php\Database;
+
+require_once('./vendor/autoload.php');
+
+$pdo = new Database();
+$pdo = $pdo->getPDO();
+
 if (!isset($_SESSION['redirected'])) {
 
     if (isset($_SESSION["user_id"])) {
@@ -45,12 +52,6 @@ if (!isset($_SESSION['redirected'])) {
         echo '<script>let session_data = ' . json_encode($session_data) . '</script>';
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
-            try {
-                $pdo = new PDO('mysql:host=localhost;dbname=grand_cinema', 'root', 'admin');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
             $sql = "SELECT * FROM users WHERE id = :user_id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['user_id' => $user_id]);

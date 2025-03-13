@@ -221,55 +221,6 @@ export default class Init {
     }
 
     profileInit() {
-        const add_phone = document.querySelector('.add_phone');
-        const phone_box = document.querySelector('.phones');
-        const phone_inputs = document.querySelectorAll('.input__phone');
-
-        let count = phone_inputs.length;
-
-        if (add_phone) {
-            add_phone.addEventListener('click', () => {
-                const label = document.createElement('label');
-                label.classList.add('form__label');
-                label.classList.add('form__label--add');
-                label.innerHTML = `Номер телефона: <div class="additional__phone"><input type="text" class="form-control input__phone" name="change_phone${count + 1}"><button type="button" class="close_phone">-</button></div><span class="form__error"></span>`;
-
-                // const label_add = document.querySelectorAll('.form__label--add');
-
-                if (count !== 3) {
-                    count += 1;
-                    phone_box.appendChild(label);
-                } else {
-                    console.log('max')
-                }
-
-                closePhone();
-            });
-        }
-
-        function countPhones() {
-            const labels = document.querySelectorAll('.form__label--add');
-            // labels.forEach((label, index) => {
-            //     const newIndex = index + 2;
-            //     const input = label.querySelector('input');
-            //
-            //     input.id = `phone${newIndex}`;
-            //     input.name = `phone${newIndex}`;
-            // });
-            count = labels.length + 2;
-        }
-
-        function closePhone() {
-            const close_phone = document.querySelectorAll('.close_phone');
-            close_phone.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const label = btn.closest('.form__label--add');
-                    label.remove();
-                    countPhones();
-                });
-            });
-        }
-
 
         const edit_profile = document.querySelector('.edit_profile');
         const modal = document.querySelector('.form_edit_profile');
@@ -439,7 +390,93 @@ export default class Init {
                 }
             })
         }
+
+        const phones_box = document.querySelector('.phones');
+
+        const inputs = document.querySelectorAll('.input__phone');
+        const first_input = inputs[0];
+        const box = first_input.closest('.additional__phone');
+        const close_btn = box.querySelector('.close_phone');
+        close_btn.remove();
+
+        let count = inputs.length;
+        function checkLengthInput() {
+            const inputs = document.querySelectorAll('.input__phone');
+            const add_btn = document.querySelector('.add_phone');
+
+            count = inputs.length;
+            console.log(add_btn);
+            if (count >= 3) {
+                if (add_btn) {
+                    add_btn.style.display = 'none';
+                }
+            } else {
+                if (add_btn) {
+                    add_btn.style.display = 'block';
+                }
+            }
+
+            let num = 0;
+            inputs.forEach(input => {
+                num++;
+                const form_label = input.closest('.form__label');
+                const span_count = form_label.querySelector('.count');
+                span_count.textContent = `${num}`;
+            })
+        }
+
+        checkLengthInput();
+
+        function addInput() {
+            const add_btn = document.querySelector('.add_phone');
+            if (add_btn) {
+                add_btn.addEventListener('click', () => {
+                    count++;
+                    const label = document.createElement('label');
+                    label.classList.add('form__label');
+                    label.classList.add('form__label--add');
+                    label.innerHTML = `<div class="number_count">Номер телефона <span class="count"></span>:</div><div class="additional__phone"><input type="text" class="form-control input__phone" name="change_phone${count}"><button type="button" class="close_phone">-</button></div><span class="form__error"></span>`;
+                    phones_box.appendChild(label);
+                    checkLengthInput();
+                })
+            }
+        }
+
+        addInput();
+
+        function removeInput() {
+            const close_btn = document.querySelectorAll('.close_phone');
+            close_btn.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const label = btn.closest('.form__label');
+                    label.remove();
+                    checkLengthInput();
+                })
+            })
+        }
+
+        removeInput();
+
         new PhoneValid();
+
+        const phones = document.querySelector('.phones');
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes) {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('form__label--add')) {
+                            new PhoneValid();
+                            removeInput();
+                        }
+                    })
+                }
+            })
+        })
+
+        observer.observe(phones, {
+            childList: true,
+            subtree: true
+        });
     }
 
     adminInit() {

@@ -497,4 +497,8 @@ th {
   cursor: pointer;
 }
 
+.number_count {
+  display: block;
+}
+
 /*# sourceMappingURL=style.css.map */
