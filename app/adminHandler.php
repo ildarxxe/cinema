@@ -10,13 +10,13 @@ require_once('./classes/php/Database.php');
 $pdo = new Database();
 $pdo = $pdo->getPDO();
 
-$sql_role = "SELECT role FROM users WHERE id = :id";
+$sql_role = "SELECT role_id FROM users_role WHERE user_id = :id";
 $sql_role = $pdo->prepare($sql_role);
 $sql_role->bindParam(':id', $_SESSION['user_id']);
 $sql_role->execute();
 $role = $sql_role->fetch();
 
-if ($role[0] === 'admin') {
+if ($role['role_id'] == 2) {
     if ($data['action'] === 'create') {
         $inputs = $data["inputs"] ?? null;
         $user_id_phone = null;
@@ -40,6 +40,8 @@ if ($role[0] === 'admin') {
 
         $keys_str = implode(", ", $keys);
         $values_str = implode(', ', array_fill(0, count($values), "?"));
+
+        print_r($data);
 
         $table_name = $data["table_name"] ?? null;
         try {
@@ -74,6 +76,21 @@ if ($role[0] === 'admin') {
         } catch (\PDOException $e) {
             echo $e->getMessage();
             echo json_encode(["error" => $e->getMessage()]);
+        }
+    }
+    if ($data['action'] === 'update_role') {
+        $role = $data['new_role'] ?? null;
+        $user_id = $data['user_id'] ?? null;
+
+        try {
+            $sql = "UPDATE users_role SET role_id = :role WHERE user_id = :user_id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':role', $role);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->execute();
+            echo json_encode(['message' => 'Успешно']);
+        } catch (\PDOException $e) {
+            echo json_encode(['error' => $e->getMessage()]);
         }
     }
 } else {

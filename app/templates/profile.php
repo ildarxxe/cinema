@@ -11,7 +11,7 @@ $pdo = $pdo->getPDO();
 $user_id = $_SESSION['user_id'];
 
 try {
-    $sql = "SELECT name, email, role FROM users WHERE id = :id";
+    $sql = "SELECT name, email FROM users WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(":id", $user_id);
     $stmt->execute();
@@ -28,12 +28,10 @@ try {
 
 $name = null;
 $email = null;
-$role = null;
 
 foreach ($result as $row) {
     $name = $row['name'];
     $email = $row['email'];
-    $role = $row['role'];
 }
 
 ?>

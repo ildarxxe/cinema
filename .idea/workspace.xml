@@ -6,15 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ff1f18-c454-4d7a-960e-a23710da8fed" name="Список изменений" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/grand_cinema(1).sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/adminHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/adminHandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/css/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/css/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/css/style.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/classes/js/Init.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/js/Init.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/classes/js/PhoneValid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/js/PhoneValid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/classes/php/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/classes/php/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/getTableForAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/getTableForAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/home.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/profile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
@@ -108,7 +107,12 @@
       <workItem from="1741526521799" duration="19000" />
       <workItem from="1741593321901" duration="26000" />
       <workItem from="1741780052087" duration="9195000" />
-      <workItem from="1741869616161" duration="4831000" />
+      <workItem from="1741869616161" duration="5861000" />
+      <workItem from="1741878863368" duration="4000" />
+      <workItem from="1742131399116" duration="28000" />
+      <workItem from="1742131613667" duration="8000" />
+      <workItem from="1742311233968" duration="2617000" />
+      <workItem from="1742315256762" duration="4420000" />
     </task>
     <servers />
   </component>

@@ -47,6 +47,13 @@ class User implements Model
                 $stmt_phones->execute();
             }
 
+            $role = "user";
+            $sql_role = "INSERT INTO users_role (user_id, role) VALUES (:user_id, :role)";
+            $stmt_role = $this->pdo->prepare($sql_role);
+            $stmt_role->bindParam(":user_id", $user_id);
+            $stmt_role->bindParam(":role", $role);
+            $stmt_role->execute();
+
             $this->pdo->commit();
             return true;
         } catch (\PDOException $e) {

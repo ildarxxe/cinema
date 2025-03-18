@@ -12,6 +12,10 @@ body {
   color: white;
 }
 
+.form__submit {
+  padding: 10px 35px !important;
+}
+
 .auth-form {
   padding: 30px 0;
   color: white;
@@ -51,7 +55,6 @@ body {
   border-radius: 5px;
   width: max-content;
   padding: 0 25px;
-  height: 30px;
   color: white;
   font-size: 17px;
   margin: 20px auto 0;
@@ -280,7 +283,9 @@ li::marker {
   cursor: pointer;
 }
 
-.form_edit_profile, .form_change_password, .form_delete_profile {
+.form_edit_profile,
+.form_change_password,
+.form_delete_profile {
   position: absolute;
   width: 100%;
   background: rgba(0, 0, 0, 0.5882352941);
@@ -290,7 +295,9 @@ li::marker {
   padding-top: 150px;
   color: white;
 }
-.form_edit_profile .form__inner, .form_change_password .form__inner, .form_delete_profile .form__inner {
+.form_edit_profile .form__inner,
+.form_change_password .form__inner,
+.form_delete_profile .form__inner {
   width: 20%;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px 0 rgba(135, 31, 34, 0.37);
@@ -302,24 +309,32 @@ li::marker {
   display: flex;
   flex-direction: column;
 }
-.form_edit_profile .form__title, .form_change_password .form__title, .form_delete_profile .form__title {
+.form_edit_profile .form__title,
+.form_change_password .form__title,
+.form_delete_profile .form__title {
   margin-top: 0;
   text-align: center;
   color: #a41b15 !important;
   text-shadow: 0.5px 0.5px 3px #000000;
 }
-.form_edit_profile .form__label, .form_change_password .form__label, .form_delete_profile .form__label {
+.form_edit_profile .form__label,
+.form_change_password .form__label,
+.form_delete_profile .form__label {
   display: flex;
   flex-direction: column;
 }
-.form_edit_profile .form-control, .form_change_password .form-control, .form_delete_profile .form-control {
+.form_edit_profile .form-control,
+.form_change_password .form-control,
+.form_delete_profile .form-control {
   height: 30px;
   border-radius: 5px;
   border: none;
   outline: none;
   margin: 3px 0;
 }
-.form_edit_profile .form__submit, .form_change_password .form__submit, .form_delete_profile .form__submit {
+.form_edit_profile .form__submit,
+.form_change_password .form__submit,
+.form_delete_profile .form__submit {
   background: #a41b15;
   border: none;
   border-radius: 5px;
@@ -331,13 +346,19 @@ li::marker {
   margin: 20px auto 0;
   cursor: pointer;
 }
-.form_edit_profile .form__submit:disabled, .form_change_password .form__submit:disabled, .form_delete_profile .form__submit:disabled {
+.form_edit_profile .form__submit:disabled,
+.form_change_password .form__submit:disabled,
+.form_delete_profile .form__submit:disabled {
   cursor: default;
 }
-.form_edit_profile .form-control:focus, .form_change_password .form-control:focus, .form_delete_profile .form-control:focus {
+.form_edit_profile .form-control:focus,
+.form_change_password .form-control:focus,
+.form_delete_profile .form-control:focus {
   outline: 3px solid #a41b15;
 }
-.form_edit_profile .form__close, .form_change_password .form__close, .form_delete_profile .form__close {
+.form_edit_profile .form__close,
+.form_change_password .form__close,
+.form_delete_profile .form__close {
   width: max-content;
   padding: 2px 6px;
   border: none;
@@ -448,6 +469,11 @@ li::marker {
   flex-direction: column;
   margin-left: 50px;
 }
+.admin .admin__form input {
+  padding: 5px 3px;
+  border: none;
+  margin-bottom: 2.5px;
+}
 
 table {
   border-collapse: collapse;
@@ -499,6 +525,28 @@ th {
 
 .number_count {
   display: block;
+}
+
+.insert_into_table {
+  width: max-content;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: rgba(255, 0, 0, 0.2117647059);
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+.selected_role select {
+  background: inherit;
+  border: none;
+  color: white;
+}
+
+.selected_role option {
+  background: rgb(106, 28, 28);
+  width: max-content;
+  padding: 3px 15px;
 }
 
 /*# sourceMappingURL=style.css.map */

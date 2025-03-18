@@ -57,11 +57,16 @@ if (!isset($_SESSION['redirected'])) {
             $stmt->execute(['user_id' => $user_id]);
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $username = $user[0]['name'] ?? null;
-            $role = $user[0]['role'] ?? null;
-
+            
+            $sql_role = "SELECT role_id FROM users_role WHERE user_id = :user_id";
+            $stmt_role = $pdo->prepare($sql_role);
+            $stmt_role->bindParam(":user_id", $user_id);
+            $stmt_role->execute();
+            $res_role = $stmt_role->fetch(PDO::FETCH_ASSOC);
+            $role = $res_role['role_id'];
             if ($username !== null) {
                 echo '<a class="profile nav-link" href="#profile">Профиль: ' . $username . '</a>';
-                if ($role === 'admin') {
+                if ($role == 2 ) {
                     echo '<a class="admin_panel nav-link" href="#admin_panel">Панель админа</a><script>let admin = true;</script>';
                 } else {
                     echo '<script>let admin = false;</script>';

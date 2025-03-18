@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: localhost
--- Время создания: Мар 06 2025 г., 22:10
--- Версия сервера: 9.2.0
--- Версия PHP: 8.1.28
+-- Хост: 127.0.0.1:3306
+-- Время создания: Мар 18 2025 г., 12:59
+-- Версия сервера: 8.0.30
+-- Версия PHP: 8.0.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -98,6 +98,17 @@ INSERT INTO `movies` (`movie_id`, `cinema_id`, `title`, `description`, `duration
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `roles`
+--
+
+CREATE TABLE `roles` (
+  `role_id` int NOT NULL,
+  `role` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `screenings`
 --
 
@@ -114,12 +125,12 @@ CREATE TABLE `screenings` (
 --
 
 INSERT INTO `screenings` (`screening_id`, `movie_id`, `hall_id`, `start_time`, `price`) VALUES
-(5, 3, 3, '2025-03-04 23:07:44', 750),
-(6, 4, 4, '2025-03-04 23:08:28', 800),
-(7, 5, 5, '2025-03-04 23:08:43', 850),
-(8, 6, 7, '2025-03-04 23:08:55', 670),
-(9, 7, 8, '2025-03-04 23:09:07', 770),
-(10, 8, 10, '2025-03-04 23:09:16', 885);
+(5, 3, 3, '2025-03-04 23:07:44', '750'),
+(6, 4, 4, '2025-03-04 23:08:28', '800'),
+(7, 5, 5, '2025-03-04 23:08:43', '850'),
+(8, 6, 7, '2025-03-04 23:08:55', '670'),
+(9, 7, 8, '2025-03-04 23:09:07', '770'),
+(10, 8, 10, '2025-03-04 23:09:16', '885');
 
 -- --------------------------------------------------------
 
@@ -135,13 +146,6 @@ CREATE TABLE `tickets` (
   `purchase_date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Дамп данных таблицы `tickets`
---
-
-INSERT INTO `tickets` (`ticket_id`, `screening_id`, `user_id`, `seat_number`, `purchase_date`) VALUES
-(56, 5, 22, '1, 15, 2', '2025-03-04 23:19:19');
-
 -- --------------------------------------------------------
 
 --
@@ -152,19 +156,15 @@ CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(256) NOT NULL,
-  `password` text NOT NULL,
-  `role` varchar(128) NOT NULL DEFAULT 'user'
+  `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`) VALUES
-(22, 'Ильдар', 'ildar@email.com', '$2y$10$xcQsx1bGR2AlYMCMP9cONednyCRlvzmMZ6Twlt9KaaJdVTKk4yTbW', 'user'),
-(33, 'dd', 'ildarmyname@gmail.com2', '$2y$10$5fRalARfrjMsqIaLt3Cy2uLKbjyCHBkoB9n4uLR01te1vKPYgK63G', 'user'),
-(35, 'Ildar', 'ildarmyname@gmail.com1', '$2y$10$7x57ffG0uR.x1AizGI5ZBuN32QaaprVOV32PxibKI5JbyVnCGY9dG', 'user'),
-(36, 'admin', 'admin@email.com', '$2y$10$46dRkU2XOKaf6ks1wCAvketZQtWNtLjqioGjhIPxRjzqHoZsaVJnm', 'admin');
+INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
+(42, 'Name', 'email@email.com', '$2y$10$Zd1tyv2t6NHlbOLS90Vmzu6t2GmeLJo9DZYMX4AWNvVJaqHGQZRt2');
 
 -- --------------------------------------------------------
 
@@ -175,10 +175,36 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`) VALUES
 CREATE TABLE `users_phone` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
-  `phone1` varchar(128) NOT NULL,
-  `phone2` varchar(128) NOT NULL,
-  `phone3` varchar(128) NOT NULL
+  `phones` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `users_phone`
+--
+
+INSERT INTO `users_phone` (`id`, `user_id`, `phones`) VALUES
+(2, 42, '1111111111'),
+(3, 42, '232323'),
+(4, 42, '121212121212');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users_role`
+--
+
+CREATE TABLE `users_role` (
+  `role_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `role` varchar(128) NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `users_role`
+--
+
+INSERT INTO `users_role` (`role_id`, `user_id`, `role`) VALUES
+(3, 42, 'admin');
 
 --
 -- Индексы сохранённых таблиц
@@ -236,6 +262,12 @@ ALTER TABLE `users_phone`
   ADD KEY `fk_user_id_phone` (`user_id`);
 
 --
+-- Индексы таблицы `users_role`
+--
+ALTER TABLE `users_role`
+  ADD PRIMARY KEY (`role_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -273,13 +305,19 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT для таблицы `users_phone`
 --
 ALTER TABLE `users_phone`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `users_role`
+--
+ALTER TABLE `users_role`
+  MODIFY `role_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

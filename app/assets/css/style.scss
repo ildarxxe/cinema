@@ -14,6 +14,10 @@ body {
 
 $color: #a41b15;
 
+.form__submit {
+  padding: 10px 35px !important;
+}
+
 .auth-form {
   padding: 30px 0;
   color: white;
@@ -58,7 +62,6 @@ $color: #a41b15;
       border-radius: 5px;
       width: max-content;
       padding: 0 25px;
-      height: 30px;
       color: white;
       font-size: 17px;
       margin: 20px auto 0;
@@ -293,7 +296,7 @@ li::marker {
   gap: 15px 0;
 }
 
-.form__inner > * {
+.form__inner>* {
   margin: 0;
   padding: 0;
 }
@@ -316,7 +319,9 @@ li::marker {
   cursor: pointer;
 }
 
-.form_edit_profile, .form_change_password, .form_delete_profile {
+.form_edit_profile,
+.form_change_password,
+.form_delete_profile {
   position: absolute;
   width: 100%;
   background: #00000096;
@@ -508,6 +513,12 @@ li::marker {
       flex-direction: column;
       margin-left: 50px;
     }
+
+    &__form input {
+      padding: 5px 3px;
+      border: none;
+      margin-bottom: 2.5px;
+    }
   }
 }
 
@@ -562,4 +573,26 @@ th {
 
 .number_count {
   display: block;
+}
+
+.insert_into_table {
+  width: max-content;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: rgba(255, 0, 0, 0.2117647059);
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+.selected_role select {
+  background: inherit;
+  border: none;
+  color: white;
+}
+
+.selected_role option {
+  background: rgb(106, 28, 28);
+  width: max-content;
+  padding: 3px 15px;
 }

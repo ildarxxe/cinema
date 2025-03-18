@@ -221,7 +221,6 @@ export default class Init {
     }
 
     profileInit() {
-
         const edit_profile = document.querySelector('.edit_profile');
         const modal = document.querySelector('.form_edit_profile');
         const close_btns = document.querySelectorAll('.form__close');
@@ -568,6 +567,32 @@ export default class Init {
                                     wordLimit(elem, 6)
                                 })
                                 deleteRow();
+
+                                const selects = document.querySelectorAll('.selected_role');
+                                if (selects) {
+                                    selects.forEach(select => {
+                                        const user_id = select.closest('tr').querySelectorAll('td')[1].textContent;
+                                        select.addEventListener('change', (e) => {
+                                            const role = e.target.options[e.target.selectedIndex].textContent;
+                                            fetch('/app/adminHandler.php', {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify({
+                                                    action: 'update_role',
+                                                    table_name: "users_role",
+                                                    user_id: user_id,
+                                                    new_role: role
+                                                })
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => data)
+                                                .catch(error => console.log(error))
+                                        })
+                                    })
+                                }
+
                             }
                             if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('admin__form')) {
                                 const submit_button = node.querySelector('.insert_into_table');
