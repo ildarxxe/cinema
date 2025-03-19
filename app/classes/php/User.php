@@ -211,6 +211,11 @@ class User implements Model
                 $stmt_phones->bindParam(":id", $id);
                 $stmt_phones->execute();
 
+                $sql_role = "DELETE FROM users_role WHERE user_id = :id";
+                $stmt_role = $this->pdo->prepare($sql_role);
+                $stmt_role->bindParam(":id", $id);
+                $stmt_role->execute();
+
                 $sql_users = "DELETE FROM $table_name WHERE id = :id";
                 $stmt_users = $this->pdo->prepare($sql_users);
                 $stmt_users->bindParam(":id", $id);
